@@ -1,0 +1,28 @@
+# user (()) for placeholder
+# if program is fed this template
+#   Our favorite language is ((a gemstone)).
+# program should ask:
+# > enter a gemstone
+# then display
+# >> Our favorite language is Ruby.
+
+# That's the simple case 
+# But, may want to reuse an answer
+
+# Complex case
+# Our favorite langauge is ((gem:a gemstone)). We think ((gem)) is
+# better than ((a gemstone)).
+
+# pointer   reusable value
+# ((gem: a gemstone))
+
+
+# what do I need? 
+
+# mad_libs_stories/
+  # simple_mad_lib
+  # complex_mad_lib
+
+# reader.rb
+  # parses the stories and does things with them
+
