@@ -3,8 +3,8 @@ class Reader
   def initialize
     @raw_mad_lib = nil
     @mad_lib_title = nil
-    # @hash_of_fill_in_blanks = {}
     @array_of_fill_in_blank_pairs = []
+    @hash_of_reusables = {}
     @finished_mad_lib = nil
   end
 
@@ -14,7 +14,6 @@ class Reader
     full_path_to_mad_libs = current_directory + '/raw_mad_libs/'
     @raw_mad_lib = File.open(full_path_to_mad_libs + raw_mad_lib, 'r').read
 
-    # @raw_mad_lib = File.open("raw_mad_libs/#{raw_mad_lib}",'r').read
     @raw_mad_lib
   end
 
@@ -28,10 +27,33 @@ class Reader
   end
 
   def ask_user_for_words
-    @array_of_fill_in_blank_pairs.each do |fill_in_blank_pair|
-      puts "Please enter : " + fill_in_blank_pair[0]
-      user_response = gets.chomp
-      fill_in_blank_pair[1] = user_response
+    @array_of_fill_in_blank_pairs.each do |fill_in_blank_pair| 
+      
+      # POPULATE @hash_of_reusables
+      # check for reusable values of form ((reusable_var : reusable_value))
+      if fill_in_blank_pair[0].include?(":")
+        temp_arr = fill_in_blank_pair[0].split(":")
+        temp_arr.map!{|item|item.strip}
+        
+        puts "Please enter : " + temp_arr[1]
+        user_response = gets.chomp
+
+        @hash_of_reusables[temp_arr[0]] = user_response
+        fill_in_blank_pair[1] = user_response
+      else
+        if @hash_of_reusables.keys.include?(fill_in_blank_pair[0])
+          # fill_in_blank_pair[0] is in hash table
+          # replace with value for that key
+          # don't ask user for it
+          fill_in_blank_pair[1] = @hash_of_reusables[fill_in_blank_pair[0]]
+        else
+          # do the 'simple case' thing
+          # ask user for input 
+          puts "Please enter : " + fill_in_blank_pair[0]
+          user_response = gets.chomp
+          fill_in_blank_pair[1] = user_response
+        end
+      end
     end
     @array_of_fill_in_blank_pairs
   end
@@ -68,7 +90,31 @@ class Reader
 
 end
 
-# puts Dir.pwd
+
+# complex case
+# reader = Reader.new
+# reader.load_raw_mad_lib('complex_story.txt')
+# reader.prepare_spots_for_user_to_fill_in
+# reader.ask_user_for_words
+# reader.fill_in_mad_lib
+# reader.user_want_to_save_mad_lib?
+
+# how solve?
+
+# have to do this in the step where getting the user input
+
+# will need #strip! to remove white space for convenience
+
+# will change the 'fill in' method
+# will need conditional to LOOK UP in the #ask_for_words
+# 
+# easiest way to do this seems to be
+# when asking for user input
+# will check if the first part of array pair exists in the stored_inputs hash
+# if it does
+  # then skip that, ie don't ask user for input
+  # but, fill it in automatically
+
 
 # reader = Reader.new
 # reader.load_raw_mad_lib('bretts_mad_lib.txt')
