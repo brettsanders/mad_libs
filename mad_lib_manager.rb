@@ -19,10 +19,17 @@ while true do
     puts "Want to see an example? (yes or no)"
     user_input_yes_or_no = gets.chomp
     if user_input_yes_or_no == 'yes'
-      puts "FAIRYTALE"
+      puts "Ex. 1 : FAIRYTALE"
       puts "Once upon a time there was a ((noun)) who"
       puts "always ((verb, past tense)) and ((verb, past tense))"
       puts "and who LOVED to ((verb)) ((adjective)) ((type of food))."
+      puts
+      puts
+      puts "Ex.2 : A BAD DAY"
+      puts "Today I had a ((adjective)) BAD day. First, I had to eat ((number)) bowls of"
+      puts "((gross food)). Next, I had to run ((number)) in the ((adjective)) rain"
+      puts "to get to my ((adjective)) job on time because my ((adjective)) car was broke."
+      puts
     end
     
     puts "Alright, time to enter your MadLib"
